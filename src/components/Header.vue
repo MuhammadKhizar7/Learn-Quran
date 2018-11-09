@@ -67,7 +67,7 @@
     </v-navigation-drawer>
     <v-toolbar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="teal darken-3"
+      color="teal darken-4"
       dark
       app
       fixed

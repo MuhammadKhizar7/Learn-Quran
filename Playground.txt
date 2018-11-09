@@ -1,0 +1,6 @@
+Al Quran
+
+1- feature
+    * A person can read Quran as book form and bookmark it for later reading +
+    * A person can listion Quran he/she can select Qari to listen +
+    * A person can search any ayah, juz, and manzal + 
