@@ -8,7 +8,7 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-btn
+    <!-- <v-btn
       fab
       bottom
       right
@@ -81,7 +81,7 @@
           <v-btn flat @click="dialog = false">Save</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-app>
 </template>
 
