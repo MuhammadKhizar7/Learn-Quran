@@ -74,7 +74,7 @@
       fixed
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="mini = !mini"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down font-weight-bold text-uppercase">Al Quran</span>
       </v-toolbar-title>
       <v-text-field
@@ -85,13 +85,13 @@
         label="Search"
         class="hidden-sm-and-down"
       ></v-text-field>
-      <v-spacer></v-spacer>
+      <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-btn flat to="/">Home</v-btn>
       <v-btn flat to="/digital-quran">Ditital Quran</v-btn>
-      <v-btn icon>
+      <v-btn icon  class="hidden-sm-and-down">
         <v-icon>apps</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon  class="hidden-sm-and-down">
         <v-icon>notifications</v-icon>
       </v-btn>
       <v-btn icon large to="/">
