@@ -14,24 +14,24 @@
                     prev-icon="mdi-menu-right"
                     next-icon="mdi-menu-left"
                     color="teal"
-                    v-model="page"
-                    :total-visible="5"
-                    :length="604"
+                    v-model="pagination.page"
+                    :total-visible="pagination.totalVisible"
+                    :length="pagination.total"
                     @input="next"
                      circle
                   ></v-pagination>
                 </v-card-text >
                   </v-flex>
                    <v-flex xs4>
-                  <v-card-text class="px-0">{{items[0].juz}}</v-card-text>
+                  <v-card-text class="px-0"> الجزء {{juz | arabicNumber}}</v-card-text>
                   </v-flex>
                 </v-layout>
                 <hr style="margin-bottom:5px;">
                 <ul>
-                  <li v-for="(item,index) in items" :key="index">
-                     <span >{{item.text}}</span>
-                     <!-- {{item.text}} -->                    
-                     <span class="ayah-number">﴿ {{item.numberInSurah | arabicNumber }} ﴾</span>
+                  <li v-for="(ayah,index) in ayahs" :key="index">
+                     <span >{{ayah.text}}</span>                  
+                     <span class="ayah-number">﴿ {{ayah.numberInSurah | arabicNumber }} ﴾</span>
+                     <!-- <hr> -->
                   </li>
                 </ul>
               </v-card>
@@ -43,7 +43,19 @@
               </v-card>
             </v-flex> 
           </v-layout>
-    <a-player :music="audioQuran" ref="player"></a-player>
+  <div v-if="isLoaded">
+      <a-player 
+        autoplay
+        controls
+        preload=false
+        :muted.sync="muted"
+        :volume.sync="volume" 
+        :music="currentAudio"  
+        :list="audioQuran"
+        :listFolded=true
+        :shuffledList="audioQuran"
+         ref="player"/>
+  </div>
         </v-container>
         
 </template>
@@ -57,27 +69,29 @@ export default {
   },
   data() {
     return {
-      surahName: "",
-      items: [],
+      surahName: '',
+      ayahs: [],
+      juz:'',
       errors: [],
       bottomNav: 'recent',
-      audioQuran: 
-          {
-            title: 'Al Quran',
-            artist: 'Abdul Samad',
-            src: 'http://cdn.alquran.cloud/media/audio/ayah/ar.abdulsamad/689',
-            pic: 'http://annisa-today.ru/wp-content/uploads/2017/10/islamic_wallpaper_6.jpg',
-            // lrc: '[00:00.00]lrc here\n[00:01.00]aplayer'
+      audioQuran:[],
+        volume: 1,
+        muted: false,
+        pagination: {
+            page:1,
+            total:604,
+            totalVisible:5
           },
-          pagination: {},
-          page:2,
-      
+          isLoaded:false   
     };
   },
   created() {
     this.next(this.page=1);
   },
   computed: {
+    currentAudio:function(){
+     return this.audioQuran[0] !==null ? this.audioQuran[0] : {src:''}
+    }
   },
   methods:{
     next(page){
@@ -88,11 +102,25 @@ export default {
         // JSON responses are automatically parsed.
         console.log(response.data.data);
         this.surahName = response.data.data.ayahs[0].surah.name;
-        this.items = response.data.data.ayahs;
+        this.ayahs = response.data.data.ayahs;
+        this.juz = response.data.data.ayahs[0].juz;
+        this.audioQuran=[];
+         response.data.data.ayahs.forEach(element => {
+           this.audioQuran.push({
+             title: element.surah.englishName,
+             artist: 'Abdul Samad',
+             src: 'http://cdn.alquran.cloud/media/audio/ayah/ar.abdulsamad/'+element.number,
+             pic:'http://annisa-today.ru/wp-content/uploads/2017/10/islamic_wallpaper_6.jpg'
+           })
+        });
+        // this.isLoaded=true
+
+      }).then(()=>{
+        this.isLoaded=true
       })
       .catch(e => {
         this.errors.push(e);
-        // console.log(e)
+        console.log(e)
       });
     }
   }
@@ -114,8 +142,8 @@ export default {
 li {
   /* font-family: Scheherazade, Scheheraza; */
   font-size: 1.5em;
-  padding: 8px;
-  margin:  5px;
+  /* padding: 2px; */
+  margin:  2px;
   list-style: none;
   direction: ltr;
   text-align: center;
@@ -135,7 +163,7 @@ li:hover {
   cursor: pointer;
 }
 .v-card__text {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   font-family: "LateefRegular", sans-serif;
   padding: 0px;
@@ -148,9 +176,9 @@ li:hover {
   color: rgb(116, 86, 4);
   cursor: pointer;
 }
-span :last-of-type {
+/* span :last-of-type {
   padding-right: 50px;
-}
+} */
 .aplayer{
     position: fixed;
     bottom: 0;
@@ -174,11 +202,17 @@ span :last-of-type {
 .theme--light.v-pagination .v-pagination__item--active {
      visibility: visible !important;
      display:block;
+
 }
 .theme--light.v-pagination .v-pagination__navigation .v-icon{
   visibility: visible !important;
 }
 .theme--light.v-pagination li .v-pagination__more{
  display:none
+}
+.v-pagination__item--active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color:black;
 }
 </style>
