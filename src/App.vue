@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
-   <app-header></app-header>
+    <app-header></app-header>
     <v-content>
-      <v-container fluid >
+      <v-container fluid>
         <v-layout justify-center align-center>
           <router-view/>
         </v-layout>
@@ -81,60 +81,58 @@
           <v-btn flat @click="dialog = false">Save</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog> -->
+    </v-dialog>-->
   </v-app>
 </template>
 
 <script>
-    import Header from './components/Header.vue';
+import Header from "./components/Header.vue";
 
-  export default {
-    components:{
-     AppHeader:Header
-    },
-    data: () => ({
-      dialog: false,
-      drawer: null,
-      items: [
-        { icon: 'contacts', text: 'Contacts' },
-        { icon: 'history', text: 'Frequently contacted' },
-        { icon: 'content_copy', text: 'Duplicates' },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'Labels',
-          model: true,
-          children: [
-            { icon: 'add', text: 'Create label' }
-          ]
-        },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'More',
-          model: false,
-          children: [
-            { text: 'Import' },
-            { text: 'Export' },
-            { text: 'Print' },
-            { text: 'Undo changes' },
-            { text: 'Other contacts' }
-          ]
-        },
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'chat_bubble', text: 'Send feedback' },
-        { icon: 'help', text: 'Help' },
-        { icon: 'phonelink', text: 'App downloads' },
-        { icon: 'keyboard', text: 'Go to the old version' }
-      ]
-    }),
-    props: {
-      source: String
-    }
+export default {
+  components: {
+    AppHeader: Header
+  },
+  data: () => ({
+    dialog: false,
+    drawer: null,
+    items: [
+      { icon: "contacts", text: "Contacts" },
+      { icon: "history", text: "Frequently contacted" },
+      { icon: "content_copy", text: "Duplicates" },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "Labels",
+        model: true,
+        children: [{ icon: "add", text: "Create label" }]
+      },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "More",
+        model: false,
+        children: [
+          { text: "Import" },
+          { text: "Export" },
+          { text: "Print" },
+          { text: "Undo changes" },
+          { text: "Other contacts" }
+        ]
+      },
+      { icon: "settings", text: "Settings" },
+      { icon: "chat_bubble", text: "Send feedback" },
+      { icon: "help", text: "Help" },
+      { icon: "phonelink", text: "App downloads" },
+      { icon: "keyboard", text: "Go to the old version" }
+    ]
+  }),
+  props: {
+    source: String
   }
+};
 </script>
 <style>
-.container{
+.container {
   padding: 4px;
 }
 </style>
